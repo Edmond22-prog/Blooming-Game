@@ -1,6 +1,5 @@
 from Business_Module.Card import Card
 
-
 class Market (Card):
     def __init__(self, name, description, opportunityTarget, gain = 0):
         "Initialization of a market"

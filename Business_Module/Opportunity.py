@@ -118,7 +118,7 @@ cost04 = 500000
 cashFlow04 = 2500
 trading_interval04 = (0,1)
 shares_owned04 = 0
-payDown04 = 300000
+payDown04 = 500000
 
 
 name05 = "Waste Recycling"

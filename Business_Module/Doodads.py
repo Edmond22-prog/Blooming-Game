@@ -3,9 +3,9 @@ from random import choice
 
 
 class Doodads (Card):
-    def __init__(self, description = "Description", toPay = 0):
+    def __init__(self, name = None, description = "Description", toPay = 0):
         "Initialisation of a doodad"
-        Card.__init__(self, description)
+        Card.__init__(self, name, description)
         self.__mToPay = toPay
 
 
@@ -22,7 +22,7 @@ class Doodads (Card):
 
 #=======================================================================================================#
 description1, topay1 = "perte d'un pari sportif" , 500
-doodad1 = Doodads(description1, topay1)
+doodad1 = Doodads(description = description1, toPay = topay1)
 
 description2, topay2 = " relloocker la maison", 200
 doodad2 = Doodads(description = description2, toPay = topay2)
