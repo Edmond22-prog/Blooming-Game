@@ -4,6 +4,7 @@ from Business_Module.Opportunity import provide_bigDeal, provide_smallDeal
 
 def main_actions ():
     while(True):
+        print("\n=== OPTIONS ===")
         print("i - Roll the dice")
         print("ii - Status")
         print("iii - Pay a debt")
@@ -14,6 +15,30 @@ def main_actions ():
             break
     return choice
 
+
+def second_actions ():
+    while(True):
+        print("=== OPTIONS ===")
+        print("i - Status")
+        print("ii - Pay a debt")
+        print("iii - Borrow")
+        print("iv - End the turn")
+        print("v - Quit the party")
+        choice = input("Your choice : ")
+        if (choice in ("1","2","3","4","5","i","ii","iii","iv","v")):
+            break
+    return choice
+
+    
+
+def FIRST_VERIFICATION (player):
+    "Verify if the player get out of the RAT RACE"
+    if(player.get_cashFlow() >= player.get_sum_monthExpenses()):
+        print("\nCongratulations, {} get out of the RAT RACE".format(player.get_pseudo()))
+        return True
+    else:
+        return False
+    
 
 def RAT_RACE (player, player_position):
     if (player_position in (1,3,5,7,9,11,13,15,17,19,21,23)):
@@ -29,9 +54,10 @@ def RAT_RACE (player, player_position):
             small = provide_smallDeal()
             print("")
             small.display()
+            print("Your cash = {} Fcfa".format(player.get_cash()))
             while (True):
-                print("(A) - BUY\t(B) - CANCEL")
-                choicein = ("Your choice : ")
+                print("\n(A) - BUY\t(B) - CANCEL")
+                choicein = input("Your choice : ")
                 if (choicein in ("A", "a", "1", "B", "b", "2")):
                     break
             if (choicein in ("A", "a", "1")):
@@ -60,9 +86,10 @@ def RAT_RACE (player, player_position):
             big = provide_bigDeal()
             print("")
             big.display()
+            print("Your cash = {} Fcfa".format(player.get_cash()))
             while (True):
-                print("(A) - BUY\t(B) - CANCEL")
-                choicein = ("Your choice : ")
+                print("\n(A) - BUY\t(B) - CANCEL")
+                choicein = input("Your choice : ")
                 if (choicein in ("A", "a", "1", "B", "b", "2")):
                     break
             if (choicein in ("A", "a", "1")):
@@ -78,3 +105,17 @@ def RAT_RACE (player, player_position):
         doodad = provide_doodads()
         doodad.display()
         player.pay(doodad.get_toPay())
+    elif(player_position == 4):
+        print("\nYou lands on Charity")
+        # À réfléchir encore sur sa configuration
+    elif(player_position in (6,14,22)):
+        print("\nYou lands on PAY CHECK")
+        player.receive(player.get_salary()-player.get_sum_monthExpenses())
+    elif(player_position == 12):
+        print("\nYou lands on Baby.\nCongrats, you have a baby !!")
+        player.has_a_baby()
+    elif(player_position == 20):
+        print("\nYou lands on Downsized.\nPay all your total expenses")
+        player.pay(player.get_sum_monthExpenses())
+    else:
+        print("!!! ERROR !!!")

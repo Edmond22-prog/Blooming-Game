@@ -1,4 +1,3 @@
-from Business_Module import Opportunity_Package
 from Business_Module.Profession import provide_profession
 from random import randint
 
@@ -114,7 +113,7 @@ class Player (object):
 
 
     def status(self):
-        print("===== PLAYER STATUS =====")
+        print("\n===== PLAYER STATUS =====")
         print("Pseudo/Name : {}".format(self.get_pseudo()))
         print("Profession : {}".format(self.__mProfession.get_name()))
         print("Salary : {} Fcfa".format(self.get_salary()))
@@ -126,10 +125,30 @@ class Player (object):
         print("-------------------")
         for tupl in self.get_monthExpenses() :
             print("- {} : {} Fcfa".format(tupl[0], tupl[1]))
+        print("\nSTOCKS/MUTUAL FUNDS LIST")
+        print("-------------------")
+        if(len(self.get_funds()) == 0):
+            print ("None")
+        else:
+            for fund in self.get_funds():
+                if (fund.get_payDown() == 0):
+                    print("- {} shares : {} -> {} Fcfa".format(fund.get_shares(), fund.get_name(), fund.get_cost()))
+                else:
+                    print("- {} : {} Fcfa".format(fund.get_name(), fund.get_cost()))
+        print("\nREAL INVESTMENT LIST")
+        print("-------------------")
+        if(len(self.get_investments()) == 0):
+            print ("None")
+        else:
+            for invest in self.get_investments():
+                print("- {} -> {} Fcfa".format(invest.get_name(), invest.get_cost()))
         print("\nLIABILITIES")
         print("-----------")
-        for tupl in self.get_liabilities() :
-            print("- {} : {} Fcfa".format(tupl[0], tupl[1]))
+        if(len(self.get_liabilities()) == 0):
+            print ("None")
+        else:
+            for tupl in self.get_liabilities() :
+                print("- {} : {} Fcfa".format(tupl[0], tupl[1]))
         print("")
 
 
@@ -152,12 +171,12 @@ class Player (object):
         if (self.get_cash() < opportunity.get_payDown()):
             print("You can not buy this opportunity")
             while(True):
-                sugg = input("Borrow ? (Y/N° : ")
+                sugg = input("Borrow ? (Y/N) : ")
                 if (sugg in ("Yes", "yes", "Y", "y", "No", "no", "N", "n")):
                     break
             if (sugg in ("Yes", "yes", "Y", "y")):
                 while (True):
-                    summStr = input("How much do you want to borrow :")
+                    summStr = input("How much do you want to borrow : ")
                     try:
                         summ = int(summStr)
                         if (summ > 0):
@@ -170,8 +189,7 @@ class Player (object):
                         print("Enter a sum !")
             else:
                 print("Opportunity too big.")
-        # Cas d'achat normal de l'opportunité
-        else:
+        else:   # Cas d'achat normal de l'opportunité
             self.set_investment(opportunity)
             self.__mCashFlow += opportunity.get_cashFlow()
             self.set_liability((opportunity.get_name(), opportunity.get_cost()-opportunity.get_payDown()))
@@ -180,7 +198,7 @@ class Player (object):
 
     def buy_funds(self, opportunity):
         "Function for buying a funds"
-        if (self.get_cash() < self.get_cash() < opportunity.get_payDown()):
+        if (self.get_cash() < opportunity.get_payDown()):
             print("You don't have enough money")
             while(True):
                 sugg = input("Borrow ? (Y/N° : ")
@@ -204,8 +222,7 @@ class Player (object):
         else:
             self.set_fund(opportunity)
             self.__mCashFlow += opportunity.get_cashFlow()
-            # Vérification de la somme à enlever du cash, selon la forme du small deal
-            if (opportunity.get_payDown() == 0):
+            if (opportunity.get_payDown() == 0):    # Vérification de la somme à enlever du cash, selon la forme du small deal
                 self.pay(opportunity.get_shares()*opportunity.get_cost())
             else:
                 self.pay(opportunity.get_payDown())
@@ -232,8 +249,7 @@ class Player (object):
     def borrow(self, summ):
         "Function used when the player borrow at the Bank"
         self.receive(summ)
-        # Cas où il y'a un prêt déjà en cours
-        for tupl in self.get_liabilities():
+        for tupl in self.get_liabilities(): # Cas où il y'a un prêt déjà en cours
             if(tupl[0] == "Loans"):
                 x = True
                 val = tupl[1]+summ
@@ -247,8 +263,7 @@ class Player (object):
                 break
             else:
                 x = False
-        # Cas où il n'y a pas de prêt en cours
-        if(x == False):
+        if(x == False): # Cas où il n'y a pas de prêt en cours
             self.get_liabilities().append(("Loans", summ))
             self.get_monthExpenses().append(("Loans Payment", int(summ*0.1)))
 
@@ -287,10 +302,3 @@ class Player (object):
                                     break
                             print("Debt paid !\n")
                         break
-
-#===== Main test =======#
-
-'''player = Player("Edghi")
-player.status()
-player.has_a_baby()
-player.status()'''
