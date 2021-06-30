@@ -31,14 +31,31 @@ def second_actions ():
 
     
 
-def FIRST_VERIFICATION (player):
+def CONGRATULATION_RAT_RACE (player):
     "Verify if the player get out of the RAT RACE"
     if(player.get_cashFlow() >= player.get_sum_monthExpenses()):
         print("\nCongratulations, {} get out of the RAT RACE".format(player.get_pseudo()))
         return True
     else:
         return False
+
+
+
+def BANKRUPTCY (player):
+    "Verify if the player is Bankruptcy"
+    if (player.get_cash() < 0 and player.get_salary() + player.get_cashFlow() < player.get_sum_monthExpenses()):
+        return True
+    else:
+        return False
+
+
+
+def actions_for_BANKRUPTCY (player):
+    "Actions to be taken in case of bankruptcy"
     
+
+
+
 
 def RAT_RACE (player, player_position):
     if (player_position in (1,3,5,7,9,11,13,15,17,19,21,23)):
@@ -107,10 +124,25 @@ def RAT_RACE (player, player_position):
         player.pay(doodad.get_toPay())
     elif(player_position == 4):
         print("\nYou lands on Charity")
-        # À réfléchir encore sur sa configuration
+        print("\nDo you want to do charity ? If you accept, in exchange for 10%\n"+
+        "of your total entries you will receive 2 dice for 3 rounds")
+        while(True):
+            print("(A) - ACCEPT\t(B) - REFUSE")
+            choicein = input("Your choice : ")
+            if (choicein in ("A","a","1","B","b","2")):
+                break
+        if (choicein in ("A","a","1")):
+            charity = (player.get_salary() + player.get_cashFlow())*0.1
+            player.pay(charity)
+            print("You have 2 dice in the next 3 rounds.")
+        else:
+            print("")
     elif(player_position in (6,14,22)):
         print("\nYou lands on PAY CHECK")
-        player.receive(player.get_salary()-player.get_sum_monthExpenses())
+        # Le monthly_cash est la somme que le joueur reçoit à chaque PAY CHECK
+        monthly_cash_flow = player.get_salary() + player.get_cashFlow() - player.get_sum_monthExpenses()
+        player.receive(monthly_cash_flow)
+        print("You receive your monthly cash flow !")
     elif(player_position == 12):
         print("\nYou lands on Baby.\nCongrats, you have a baby !!")
         player.has_a_baby()

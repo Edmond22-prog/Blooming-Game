@@ -178,13 +178,14 @@ class Player (object):
                 while (True):
                     summStr = input("How much do you want to borrow : ")
                     try:
+                        # La somme prêtée doit être un multiple de 100000
                         summ = int(summStr)
-                        if (summ > 0):
+                        if (summ > 100000 and summ%100000 == 0):
                             self.borrow(summ)
                             self.buy_investment(opportunity)
                             break
                         else:
-                            print("Enter a valid sum !")
+                            print("Enter a valid sum !\nThe sum must be a multiple of 100000")
                     except:
                         print("Enter a sum !")
             else:
@@ -194,6 +195,7 @@ class Player (object):
             self.__mCashFlow += opportunity.get_cashFlow()
             self.set_liability((opportunity.get_name(), opportunity.get_cost()-opportunity.get_payDown()))
             self.pay(opportunity.get_payDown())
+            print("Big opportunity purchased !")
 
 
     def buy_funds(self, opportunity):
@@ -208,13 +210,14 @@ class Player (object):
                 while (True):
                     summStr = input("How much do you want to borrow :")
                     try:
+                        # La somme prêtée doit être un multiple de 100000
                         summ = int(summStr)
-                        if (summ > 0):
+                        if (summ > 100000 and summ%100000 == 0):
                             self.borrow(summ)
                             self.buy_funds(opportunity)
                             break
                         else:
-                            print("Enter a valid sum !")
+                            print("Enter a valid sum !\nThe sum must be a multiple of 100000")
                     except:
                         print("Enter a sum !")
             else:
@@ -226,6 +229,7 @@ class Player (object):
                 self.pay(opportunity.get_shares()*opportunity.get_cost())
             else:
                 self.pay(opportunity.get_payDown())
+            print("Small opportunity purchased !")
 
 
     def sell_investment(self, opportunity):
@@ -266,6 +270,7 @@ class Player (object):
         if(x == False): # Cas où il n'y a pas de prêt en cours
             self.get_liabilities().append(("Loans", summ))
             self.get_monthExpenses().append(("Loans Payment", int(summ*0.1)))
+        print("Sum lend !")
 
 
     def pay_debt(self):

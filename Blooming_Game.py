@@ -20,12 +20,12 @@ else:
     party = Party([player1])
     print("NOW, THE PARTY BEGIN !!")
     player1.status()
-    while(not FIRST_VERIFICATION(player1)):
+    while(not CONGRATULATION_RAT_RACE(player1)):
         choice = main_actions()
         if(choice == "1" or choice == "i"):
             dice = player1.roll_dice()
-            party.set_player1Position(dice)
-            RAT_RACE(player1, party.get_player1Position())
+            party.set_playerPosition(player1, dice)
+            RAT_RACE(player1, party.get_playerPosition(player1))
         elif(choice == "2" or choice == "ii"):
             player1.status()
         elif(choice == "3" or choice == "iii"):
