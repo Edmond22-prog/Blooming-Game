@@ -1,9 +1,10 @@
 from Business_Module.Profession import provide_profession
 from random import randint
-
+ 
 
 class Player (object):
-    def __init__(self, pseudo, profession = provide_profession(), cashFlow = 0, cash = 0, childNumber = 0, liabilities = [], monthExpenses = [], investmentList = [], fundList = []):
+    def __init__(self, pseudo, profession = provide_profession(), cashFlow = 0, cash = 0, childNumber = 0, liabilities = [], 
+    monthExpenses = [], investmentList = [], fundList = [], charity = False, downsized = False):
         "Initialization of a player interface game"
         self.__mPseudo = pseudo
         self.__mProfession = profession
@@ -27,6 +28,9 @@ class Player (object):
             self.__mCash = cash
         self.__mInvestments = investmentList # Liste des grandes opportunités
         self.__mFunds = fundList # Liste des petites opportunités
+        self.mCharity = charity   # Pour savoir s'il est en pleine charité ou pas
+        self.mDownsized = downsized     # Pour savoir s'il a perdu temporairement son métier
+        self.compteur = 0    # Compteur pour énumérer le nombre de tour du joueur sur une situation (Charity)
 
 
     def set_pseudo(self, pseudo):
@@ -35,6 +39,10 @@ class Player (object):
 
     def get_pseudo(self):
         return self.__mPseudo
+
+
+    def get_profession(self):
+        return self.__mProfession
 
 
     def set_liability(self, tupl = ("Liability name", 0)):
@@ -101,13 +109,14 @@ class Player (object):
 
 
     def roll_dice(self):
-        number = randint(1,6)
-        print(".\n..\n...\n{} roll {}\n".format(self.get_pseudo(), number))
-        return number
-    
-
-    def roll_2dice(self):
-        number = randint(2,12)
+        if (self.mCharity and self.compteur < 3):     # Si le joueur a fait un acte de charité, alors il a 3 tours pour lancer 2 dés
+            number = randint(2,12)
+            self.compteur += 1
+            if(self.compteur == 3):
+                self.compteur = 0
+                self.mCharity = False
+        else:       # Si ce n'est pas le cas ou ses 3 tours sont passés, alors il relance 1 seul dé
+            number = randint(1,6)
         print(".\n..\n...\n{} roll {}\n".format(self.get_pseudo(), number))
         return number
 
@@ -115,7 +124,7 @@ class Player (object):
     def status(self):
         print("\n===== PLAYER STATUS =====")
         print("Pseudo/Name : {}".format(self.get_pseudo()))
-        print("Profession : {}".format(self.__mProfession.get_name()))
+        print("Profession : {}".format(self.get_profession().get_name()))
         print("Salary : {} Fcfa".format(self.get_salary()))
         print("CashFlow : {} Fcfa".format(self.get_cashFlow()))
         print("Number of child : {}".format(self.get_childNumber()))
@@ -165,6 +174,13 @@ class Player (object):
             self.set_monthExpense(("Child(s) Expenses", num))
 
 
+    def do_a_charity(self):
+        self.mCharity = True
+        charity = (self.get_salary() + self.get_cashFlow())*0.1
+        self.pay(charity)
+        print("You have 2 dice in the next 3 rounds.")
+
+
     def buy_investment(self, opportunity):
         "Function for buying an investment"
         # Cas où le cash est inférieur à la somme de l'opportunité
@@ -178,13 +194,14 @@ class Player (object):
                 while (True):
                     summStr = input("How much do you want to borrow : ")
                     try:
+                        # La somme prêtée doit être un multiple de 100000
                         summ = int(summStr)
-                        if (summ > 0):
+                        if (summ > 100000 and summ%100000 == 0):
                             self.borrow(summ)
                             self.buy_investment(opportunity)
                             break
                         else:
-                            print("Enter a valid sum !")
+                            print("Enter a valid sum !\nThe sum must be a multiple of 100000")
                     except:
                         print("Enter a sum !")
             else:
@@ -194,6 +211,7 @@ class Player (object):
             self.__mCashFlow += opportunity.get_cashFlow()
             self.set_liability((opportunity.get_name(), opportunity.get_cost()-opportunity.get_payDown()))
             self.pay(opportunity.get_payDown())
+            print("Big opportunity purchased !")
 
 
     def buy_funds(self, opportunity):
@@ -208,13 +226,14 @@ class Player (object):
                 while (True):
                     summStr = input("How much do you want to borrow :")
                     try:
+                        # La somme prêtée doit être un multiple de 100000
                         summ = int(summStr)
-                        if (summ > 0):
+                        if (summ > 100000 and summ%100000 == 0):
                             self.borrow(summ)
                             self.buy_funds(opportunity)
                             break
                         else:
-                            print("Enter a valid sum !")
+                            print("Enter a valid sum !\nThe sum must be a multiple of 100000")
                     except:
                         print("Enter a sum !")
             else:
@@ -226,6 +245,7 @@ class Player (object):
                 self.pay(opportunity.get_shares()*opportunity.get_cost())
             else:
                 self.pay(opportunity.get_payDown())
+            print("Small opportunity purchased !")
 
 
     def sell_investment(self, opportunity):
@@ -266,6 +286,7 @@ class Player (object):
         if(x == False): # Cas où il n'y a pas de prêt en cours
             self.get_liabilities().append(("Loans", summ))
             self.get_monthExpenses().append(("Loans Payment", int(summ*0.1)))
+        print("Sum lend !")
 
 
     def pay_debt(self):
