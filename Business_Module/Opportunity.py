@@ -14,6 +14,10 @@ class Opportunity (Card):
         return self.__mCost
 
 
+    def set_cashFlow(self, cashF):
+        self.__mCashFlow = cashF
+
+
     def get_cashFlow(self):
         "Get the cash flow that the opportunity provides"
         return self.__mCashFlow
@@ -30,6 +34,10 @@ class Small_Deals (Opportunity):
         self.__mPayDown = payDown
     
 
+    def set_cost(self, cost):
+        self.__mCost = cost
+    
+    
     def set_shares(self, numberShares):
         "Set the shares put for this opportunity"
         self.__mSharesOwned = numberShares

@@ -141,11 +141,13 @@ profession7 = Profession(name7, salary7, savings7, liabilities7, monthExpenses7)
 name8, salary8, savings8 = "Carpenter", 200000, 25000
 liabilities8 = [
   ("Home Mortgage", 1000000),
+  ("Car Loans", 0),
   ("Credit Card", 40000)
 ]
 monthExpenses8 = [
   ("Taxes", 35000),
   ("Home Mortgage Payment", 20000),
+  ("Car Loans Payment", 0),
   ("Credit Card Payment", 2000),
   ("Other Expenses", 23000),
   ("Child(s) Expenses", 0)
@@ -155,11 +157,13 @@ profession8 = Profession(name8, salary8, savings8, liabilities8, monthExpenses8)
 name9, salary9, savings9 = "Plumber", 100000, 10000
 liabilities9 = [
   ("Home Mortgage", 1000000),
+  ("Car Loans", 0),
   ("Credit Card", 30000)
 ]
 monthExpenses9 = [
   ("Taxes", 10000),
   ("Home Mortgage Payment", 15000),
+  ("Car Loans Payment", 0),
   ("Credit Card Payment", 3000),
   ("Other Expenses", 32000),
   ("Child(s) Expenses", 0)
@@ -169,11 +173,13 @@ profession9 = Profession(name9, salary9, savings9, liabilities9, monthExpenses9)
 name10, salary10, savings10 = "Builder", 150000, 30000
 liabilities10 = [
   ("Home Mortgage", 500000),
+  ("Car Loans", 0),
   ("Credit Card", 50000)
 ]
 monthExpenses10 = [
   ("Taxes", 15000),
   ("Home Mortgage Payment", 10000),
+  ("Car Loans Payment", 0),
   ("Credit Card Payment", 2000),
   ("Other Expenses", 43000),
   ("Child(s) Expenses", 0)

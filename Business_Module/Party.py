@@ -1,16 +1,15 @@
 class Party (object):
-    def __init__(self, playerList, playersPosition = [1,1,1], lastToPlay = 0):
+    def __init__(self, playerList, playersPosition = [1,1,1], partyType = "Single Player"):
         "Initialization of a game party"
         self.__mPlayerList = playerList
-        self.__mPartType = "Single Player"
+        self.__mPartyType = partyType
         self.__mPlayersPosition = playersPosition
-        self.__mLastToPlay = lastToPlay
 
 
     def add_player(self, player):
         if(len(self.get_players()) < 3):
             self.__mPlayerList.append(player)
-            self.__mPartType = "Multi Player"
+            self.__mPartyType = "Multi Player"
         else:
             print("Could not add more players !")
     
@@ -23,11 +22,17 @@ class Party (object):
     def get_playersPosition(self):
         "Get the position of all the players"
         return self.__mPlayersPosition
+    
+
+    def get_partyType(self):
+        "Get the type of the party"
+        return self.__mPartyType
 
 
     def quit_party(self, player):
         for p in self.get_players():
             if(p.get_pseudo() == player.get_pseudo()):
+                print("{} leave the party.".format(player.get_pseudo()))
                 self.get_players().remove(player)
                 return True
         return False
@@ -53,14 +58,3 @@ class Party (object):
                 return self.get_playersPosition()[tupl[0]]
     
 
-    # Détermine le prochain joueur à jouer, paradoxalement le dernier à avoir jouer aussi
-    def next_to_play(self):
-        if(len(self.get_players()) > 1):
-            if(self.__mLastToPlay < len(self.get_players())-1):
-                self.__mLastToPlay += 1
-                print("It's {}'s turn".format(self.get_players()[self.__mLastToPlay]))
-            else:
-                self.__mLastToPlay = 0
-                print("It's {}'s turn".format(self.get_players()[self.__mLastToPlay]))
-        else:
-            print("It's {}'s turn".format(self.get_players()[self.__mLastToPlay]))
