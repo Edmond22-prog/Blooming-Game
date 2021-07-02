@@ -3,11 +3,14 @@ from random import randint
  
 
 class Player (object):
-    def __init__(self, pseudo, profession = provide_profession(), cashFlow = 0, cash = 0, childNumber = 0, liabilities = [], 
+    def __init__(self, pseudo, profession = None, cashFlow = 0, cash = 0, childNumber = 0, liabilities = [], 
     monthExpenses = [], investmentList = [], fundList = [], charity = False, downsized = False):
         "Initialization of a player interface game"
         self.__mPseudo = pseudo
-        self.__mProfession = profession
+        if(profession == None):
+            self.__mProfession = provide_profession()
+        else:
+            self.__mProfession = profession
         self.__mSalary = self.__mProfession.get_salary()
         self.__mCashFlow = cashFlow
         self.__mChildNumber = childNumber
