@@ -179,7 +179,7 @@ class Player (object):
 
     def do_a_charity(self):
         self.mCharity = True
-        charity = (self.get_salary() + self.get_cashFlow())*0.1
+        charity = int((self.get_salary() + self.get_cashFlow())*0.1)
         self.pay(charity)
         print("You have 2 dice in the next 3 rounds.")
 
