@@ -11,23 +11,23 @@ class AbstractPlayerDAO (ABC):
         pass
 
 
-    ''' Ajout d'un joueur dans la partie '''
-    def add_Player (player):
+    ''' Enregistrement d'un joueur dans la BD '''
+    def register_Player (player):
         pass
 
     
     ''' Modification des informations d'un joueur '''
-    def update_Player (player):
+    def update_Player (id_player):
         pass
 
 
-    ''' Achat d'une grosse opportunité '''
-    def buy_Investment (big_deal):
+    ''' Enregistrement d'une grosse opportunité '''
+    def register_Investment (big_deal):
         pass
 
 
-    ''' Achat d'une petite opportunité '''
-    def buy_Fund (small_deal):
+    ''' Enregistrement d'une petite opportunité '''
+    def register_Fund (small_deal):
         pass
 
 

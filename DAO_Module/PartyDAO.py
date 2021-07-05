@@ -1,4 +1,5 @@
 from Dao_Module.Abstract import AbstractPartyDAO
+from Dao_Module.PlayerDAO import PlayerDAO
 import sqlite3
 from datetime import datetime
 
@@ -25,8 +26,8 @@ class PartyDAO (AbstractPartyDAO):
         self.__connection()
 
         # Insertion des données liées à la partie
-        data_party = (party.get_partyType(), party.get_turn(), save_date)
-        requete1 = "INSERT INTO Partie (TypePartie, Tour, DateSauvegarde) VALUES (?,?,?)"
+        data_party = (party.get_partyType(), party.get_turn(), save_date, len(party.get_players()))
+        requete1 = "INSERT INTO Partie (TypePartie, Tour, DateSauvegarde, NombreJoueur) VALUES (?,?,?,?)"
         self.__mCursor.execute(requete1,data_party)
 
         # Récupération de l'id de la partie
@@ -36,26 +37,9 @@ class PartyDAO (AbstractPartyDAO):
             idParty = int(result)
 
         for player in party.get_players():
-            # Insertion des données liées à la profession d'un joueur
-            data_profession = (player.get_profession().get_name(), player.get_profession().get_salary(), player.get_profession().get_savings())
-            requete2 = "INSERT INTO Profession (Nom, Salaire, Economie) VALUES (?,?,?)"
-            self.__mCursor.execute(requete2, data_profession)
-
-            # Récupération de l'id de la profession
-            self.__mCursor.execute("SELECT idProfession FROM Profession WHERE Nom = ?", (player.get_profession().get_name(),))
-            for result in self.__mCursor.fetchone():
-                idProfession = int(result)
-
-            # Insertion des données liées au joueur
-            data_player = (player.get_pseudo(), player.get_dream(), player.get_cashFlow(), player.get_childNumber(), player.get_cash(), idProfession)
-            requete3 = "INSERT INTO Joueur (Pseudo, Reve, CashFlow, NombreEnfant, Cash, idProfession) VALUES (?,?,?,?,?,?)"
-            self.__mCursor.execute(requete3, data_player)
-
-            # Récupération de l'id du joueur
-            player_inf = (player.get_pseudo(), player.get_cash())
-            self.__mCursor.execute("SELECT idJoueur FROM Joueur WHERE Nom = ? AND Cash = ?", player_inf)
-            for result in self.__mCursor.fetchone():
-                idPlayer = int(result)
+            # Enregistrement du joueur dans la BD
+            player_dao = PlayerDAO(self.__database)
+            idPlayer = player_dao.register_Player(player)
 
             # Liaison du joueur à la partie, avec sa position
             self.__mCursor.execute("INSERT INTO Jouer VALUES (?,?,?)", (idPlayer, idParty, party.get_playerPosition(player)))

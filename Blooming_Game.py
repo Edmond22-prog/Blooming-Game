@@ -93,7 +93,15 @@ else:
                                 if (decision in ("Y","y","N","n")):
                                     break
                             if(decision in ("Y","y")):
-                                party.quit_party(player)       # À modifier avec la classe playerDAO
+                                '''while(True):
+                                    print("\nDO YOU WANT TO SAVE THE PARTY ? (Y/N)")
+                                    decision = input("Your decision : ")
+                                    if (decision in ("Y","y","N","n")):
+                                        break
+                                if(decision in ("Y","y")):
+                                    dao_impl = PartyDAO("db_blooming_game.sq3")
+                                    dao_impl.save_Party(party)'''
+                                party.quit_party(player)       
                                 break
                             else:
                                 print("Continue the game !")
@@ -130,7 +138,7 @@ else:
                         if(decision in ("Y","y")):
                             dao_impl = PartyDAO("db_blooming_game.sq3")
                             dao_impl.save_Party(party)'''
-                        party.quit_party(player)       # À modifier avec la classe playerDAO
+                        party.quit_party(player)     
                         break
                     else:
                         print("Continue the game !")
