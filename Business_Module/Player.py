@@ -8,6 +8,7 @@ class Player (object):
         "Initialization of a player interface game"
         self.__mPseudo = pseudo
         self.__mDream = dream
+        
         if(profession == None):
             self.__mProfession = provide_profession()
         else:
