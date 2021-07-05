@@ -11,6 +11,7 @@ Errors encountered :
 * sqlite3.OperationalError: database is locked
 
 Possibility to play with several (max 3 players)
+
 The whole RAT RACE works
 
 Run Blooming_Game.py
