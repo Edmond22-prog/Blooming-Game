@@ -1,6 +1,8 @@
 from Business_Module.Player import Player
 from Business_Module.Party import Party
 from Business_Module.Game_Functions import *
+from Business_Module.Dreams import provide_dream
+from Dao_Module.PartyDAO import PartyDAO
 
 
 print("     ____________________________")
@@ -13,12 +15,15 @@ while(True):
     if(init_choice in ("1", "2")):
         break
 if(init_choice == "2"):
-    print("No saving party !\nEnd of the game.")
+    dao_impl = PartyDAO("db_blooming_game.sq3")
+    dao_impl.show_Parts()
 else:
     playerName = input("\nPlayer 1, enter your name or surname : ")
     player1 = Player(playerName)
     party = Party([player1])
     INITIAL_PRESENTATION(player1)
+    playerDream = provide_dream()
+    player1.set_dream(playerDream)
     while(True):
         print("Do you want to add another players ? (Y/N)")
         reponse = input("Decision : ")
@@ -35,6 +40,8 @@ else:
                         player = Player(player_name)
                         party.add_player(player)
                         INITIAL_PRESENTATION(player)
+                        dream = provide_dream()
+                        player.set_dream(dream)
                     break
                 else:
                     print("Enter a valid number !\nThe max of players for a game is 3")
@@ -86,7 +93,15 @@ else:
                                 if (decision in ("Y","y","N","n")):
                                     break
                             if(decision in ("Y","y")):
-                                party.quit_party(player)       # À modifier avec la classe playerDAO
+                                '''while(True):
+                                    print("\nDO YOU WANT TO SAVE THE PARTY ? (Y/N)")
+                                    decision = input("Your decision : ")
+                                    if (decision in ("Y","y","N","n")):
+                                        break
+                                if(decision in ("Y","y")):
+                                    dao_impl = PartyDAO("db_blooming_game.sq3")
+                                    dao_impl.save_Party(party)'''
+                                party.quit_party(player)       
                                 break
                             else:
                                 print("Continue the game !")
@@ -115,9 +130,18 @@ else:
                         if (decision in ("Y","y","N","n")):
                             break
                     if(decision in ("Y","y")):
-                        party.quit_party(player)       # À modifier avec la classe playerDAO
+                        '''while(True):
+                            print("\nDO YOU WANT TO SAVE THE PARTY ? (Y/N)")
+                            decision = input("Your decision : ")
+                            if (decision in ("Y","y","N","n")):
+                                break
+                        if(decision in ("Y","y")):
+                            dao_impl = PartyDAO("db_blooming_game.sq3")
+                            dao_impl.save_Party(party)'''
+                        party.quit_party(player)     
                         break
                     else:
                         print("Continue the game !")
         turn += 1
+        party.set_turn(turn)
     print("END OF THE GAME !")

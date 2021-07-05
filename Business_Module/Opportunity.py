@@ -48,6 +48,10 @@ class Small_Deals (Opportunity):
         return self.__mSharesOwned
 
 
+    def get_tradingInterval (self):
+        return self.__mTradingInterval
+
+
     def get_payDown(self):
         "Get the pay down of the opportunity"
         return self.__mPayDown

@@ -4,11 +4,6 @@ import sqlite3
 # DAO = Data Access Object
 
 class AbstractPlayerDAO (ABC):
-    # Définition d'une classe abstraite d'un joueur DAO
-    def __init__(self, database):
-        "Connection to the database"
-        self.mConnection = sqlite3.connect(database)
-        self.mCursor = self.mConnection.cursor()
 
     # Definition des interfaces d'accès à la classe PlayerDAO
     ''' Recherche d'un joueur '''
@@ -16,23 +11,23 @@ class AbstractPlayerDAO (ABC):
         pass
 
 
-    ''' Ajout d'un joueur dans la partie '''
-    def add_Player (player):
+    ''' Enregistrement d'un joueur dans la BD '''
+    def register_Player (player):
         pass
 
     
     ''' Modification des informations d'un joueur '''
-    def update_Player (player):
+    def update_Player (id_player):
         pass
 
 
-    ''' Achat d'une grosse opportunité '''
-    def buy_Investment (big_deal):
+    ''' Enregistrement d'une grosse opportunité '''
+    def register_Investment (big_deal):
         pass
 
 
-    ''' Achat d'une petite opportunité '''
-    def buy_Fund (small_deal):
+    ''' Enregistrement d'une petite opportunité '''
+    def register_Fund (small_deal):
         pass
 
 
@@ -49,10 +44,6 @@ class AbstractPlayerDAO (ABC):
 
 class AbstractPartyDAO (ABC):
     # Définition d'une classe abstraite d'une party DAO
-    def __init__(self, database):
-        "Connection to the database"
-        self.mConnection = sqlite3.connect(database)
-        self.mCursor = self.mConnection.cursor()
 
     
     ''' Sauvegarde d'une partie '''
@@ -61,15 +52,15 @@ class AbstractPartyDAO (ABC):
 
 
     ''' Restauration d'une partie '''
-    def load_Party (party):
+    def load_Party (id_party):
         pass
 
     
-    ''' Modification des données d'une partie '''
-    def update_Party (party):
+    ''' Suppression d'une partie sauvegardée '''
+    def delete_Party (id_party):
         pass
 
 
-    ''' Recherche d'une partie '''
-    def find_Party (id_party):
+    ''' Affichage des parties sauvegardées '''
+    def show_Parts ():
         pass
