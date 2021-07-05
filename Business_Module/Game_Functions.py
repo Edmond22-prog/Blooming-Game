@@ -1,5 +1,6 @@
 from Business_Module.Doodads import provide_doodads 
 from Business_Module.Opportunity import provide_bigDeal, provide_smallDeal
+from Business_Module.Dreams import list_dreams
 
 
 def main_actions ():
@@ -234,4 +235,7 @@ def RAT_RACE (player, player_position):
 
 
 
-# def FAST_RACE (player, player_position):
+# Pas encore operationnel
+'''def FAST_TRACK (player, player_position):
+    if(player_position in (1,3,6,9,11,13,15,17,19,21,23,25,27,29,31,33,35,37,39,41,43,45,47)):'''
+        

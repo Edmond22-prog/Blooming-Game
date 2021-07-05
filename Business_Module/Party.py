@@ -1,9 +1,10 @@
 class Party (object):
-    def __init__(self, playerList, playersPosition = [1,1,1], partyType = "Single Player"):
+    def __init__(self, playerList, playersPosition = [1,1,1], partyType = "Single Player", turn = 1):
         "Initialization of a game party"
         self.__mPlayerList = playerList
         self.__mPartyType = partyType
         self.__mPlayersPosition = playersPosition
+        self.__mTurn = turn
 
 
     def add_player(self, player):
@@ -27,6 +28,14 @@ class Party (object):
     def get_partyType(self):
         "Get the type of the party"
         return self.__mPartyType
+
+    
+    def set_turn (self, turn):
+        self.__mTurn = turn
+        
+
+    def get_turn(self):
+        return self.__mTurn
 
 
     def quit_party(self, player):

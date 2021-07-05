@@ -4,11 +4,6 @@ import sqlite3
 # DAO = Data Access Object
 
 class AbstractPlayerDAO (ABC):
-    # Définition d'une classe abstraite d'un joueur DAO
-    def __init__(self, database):
-        "Connection to the database"
-        self.mConnection = sqlite3.connect(database)
-        self.mCursor = self.mConnection.cursor()
 
     # Definition des interfaces d'accès à la classe PlayerDAO
     ''' Recherche d'un joueur '''
@@ -49,10 +44,6 @@ class AbstractPlayerDAO (ABC):
 
 class AbstractPartyDAO (ABC):
     # Définition d'une classe abstraite d'une party DAO
-    def __init__(self, database):
-        "Connection to the database"
-        self.mConnection = sqlite3.connect(database)
-        self.mCursor = self.mConnection.cursor()
 
     
     ''' Sauvegarde d'une partie '''
@@ -61,15 +52,15 @@ class AbstractPartyDAO (ABC):
 
 
     ''' Restauration d'une partie '''
-    def load_Party (party):
+    def load_Party (id_party):
         pass
 
     
-    ''' Modification des données d'une partie '''
-    def update_Party (party):
+    ''' Suppression d'une partie sauvegardée '''
+    def delete_Party (id_party):
         pass
 
 
-    ''' Recherche d'une partie '''
-    def find_Party (id_party):
+    ''' Affichage des parties sauvegardées '''
+    def show_Parts ():
         pass

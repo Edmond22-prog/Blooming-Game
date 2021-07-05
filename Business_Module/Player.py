@@ -3,11 +3,15 @@ from random import randint
  
 
 class Player (object):
-    def __init__(self, pseudo, profession = provide_profession(), cashFlow = 0, cash = 0, childNumber = 0, liabilities = [], 
+    def __init__(self, pseudo, dream = None, profession = None, cashFlow = 0, cash = 0, childNumber = 0, liabilities = [], 
     monthExpenses = [], investmentList = [], fundList = [], charity = False, downsized = False):
         "Initialization of a player interface game"
         self.__mPseudo = pseudo
-        self.__mProfession = profession
+        self.__mDream = dream
+        if(profession == None):
+            self.__mProfession = provide_profession()
+        else:
+            self.__mProfession = profession
         self.__mSalary = self.__mProfession.get_salary()
         self.__mCashFlow = cashFlow
         self.__mChildNumber = childNumber
@@ -31,14 +35,18 @@ class Player (object):
         self.mCharity = charity   # Pour savoir s'il est en pleine charité ou pas
         self.mDownsized = downsized     # Pour savoir s'il a perdu temporairement son métier
         self.compteur = 0    # Compteur pour énumérer le nombre de tour du joueur sur une situation (Charity)
-
-
-    def set_pseudo(self, pseudo):
-        self.__mPseudo = pseudo
     
 
     def get_pseudo(self):
         return self.__mPseudo
+    
+
+    def set_dream (self, dream):
+        self.__mDream = dream
+
+
+    def get_dream(self):
+        return self.__mDream
 
 
     def get_profession(self):
@@ -176,7 +184,7 @@ class Player (object):
 
     def do_a_charity(self):
         self.mCharity = True
-        charity = (self.get_salary() + self.get_cashFlow())*0.1
+        charity = int((self.get_salary() + self.get_cashFlow())*0.1)
         self.pay(charity)
         print("You have 2 dice in the next 3 rounds.")
 
